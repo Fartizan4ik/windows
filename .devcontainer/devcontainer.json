@@ -11,7 +11,6 @@
     "3389": { "label": "RDP", "onAutoForward": "silent" }
   },
   "otherPortsAttributes": { "onAutoForward": "ignore" },
-  "postStartCommand": "bash /workspaces/windows/.devcontainer/tailscale-up.sh || true",
   "dockerComposeFile": "codespaces.yml",
   "initializeCommand": "docker system prune --all --force"
 }
