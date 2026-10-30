@@ -4,7 +4,8 @@ services:
     image: ghcr.io/dockur/windows
     environment:
       VERSION: "11"
-      RAM_SIZE: "10G"
+      RAM_SIZE: "6G"
+      BALLOONING: "Y"
       CPU_CORES: "4"
       DISK_SIZE: "max"
       DISK_MINIMUM: "1G"
