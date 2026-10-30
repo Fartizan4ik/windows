@@ -1,8 +1,9 @@
 {
   "name": "Windows 11 Pro",
   "service": "windows",
-  "containerEnv": {
-    "VERSION": "11"
+  "containerEnv": { "VERSION": "11" },
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
   },
   "forwardPorts": [8006, 3389],
   "portsAttributes": {
@@ -10,6 +11,7 @@
     "3389": { "label": "RDP", "onAutoForward": "silent" }
   },
   "otherPortsAttributes": { "onAutoForward": "ignore" },
+  "postStartCommand": "bash /workspaces/windows/.devcontainer/tailscale-up.sh",
   "dockerComposeFile": "codespaces.yml",
   "initializeCommand": "docker system prune --all --force"
 }
