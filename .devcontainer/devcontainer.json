@@ -4,21 +4,12 @@
   "containerEnv": {
     "VERSION": "11"
   },
-  "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    }
-  },
-  "forwardPorts": [8006],
+  "forwardPorts": [8006, 3389],
   "portsAttributes": {
-    "8006": {
-      "label": "Web",
-      "onAutoForward": "notify"
-    }
+    "8006": { "label": "Web", "onAutoForward": "notify" },
+    "3389": { "label": "RDP", "onAutoForward": "silent" }
   },
-  "otherPortsAttributes": {
-    "onAutoForward": "ignore"
-  },
+  "otherPortsAttributes": { "onAutoForward": "ignore" },
   "dockerComposeFile": "codespaces.yml",
   "initializeCommand": "docker system prune --all --force"
 }
