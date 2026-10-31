@@ -24,4 +24,12 @@ fi
   done
 ) >/dev/null 2>&1 &
 
+# 3. Prune leftover ISO installers if Windows is already installed (frees ~4.5 GB)
+if [ -f "/storage/windows.boot" ] || [ -f "/storage/windows.img" ]; then
+  rm -f /storage/custom.iso /storage/boot.iso /tmp/*.iso 2>/dev/null || true
+fi
+
+# 4. Enforce 10G RAM size
+export RAM_SIZE="10G"
+
 return 0 2>/dev/null || exit 0
