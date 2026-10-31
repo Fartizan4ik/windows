@@ -2,14 +2,6 @@
   "name": "Windows 11 Revision",
   "service": "windows",
   "dockerComposeFile": "codespaces.yml",
-  "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "lts"
-    }
-  },
   "forwardPorts": [8006, 3389],
   "portsAttributes": {
     "8006": {
@@ -24,6 +16,5 @@
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
-  "postStartCommand": "/bin/sh -c 'nohup /bin/sh /workspaces/windows/.devcontainer/tailscale-up.sh >/tmp/tailscale.log 2>&1 &'",
   "initializeCommand": "docker system prune --all --force"
 }

@@ -5,16 +5,16 @@ STATE="/workspaces/windows/.devcontainer/tailscale"
 mkdir -p "$STATE"
 mkdir -p /var/run/tailscale
 
-# 1. Install Tailscale if missing
-if ! command -v tailscale >/dev/null 2>&1; then
-  echo "Installing Tailscale..."
-  curl -fsSL https://tailscale.com/install.sh | sh >/dev/null 2>&1 || true
-fi
-
-# 2. Ensure /dev/net/tun exists
+# 1. Ensure /dev/net/tun exists
 if [ ! -c /dev/net/tun ]; then
   mkdir -p /dev/net
   mknod /dev/net/tun c 10 200 2>/dev/null || true
+fi
+
+# 2. Install Tailscale if missing
+if ! command -v tailscale >/dev/null 2>&1; then
+  echo "Installing Tailscale..."
+  curl -fsSL https://tailscale.com/install.sh | sh >/dev/null 2>&1 || true
 fi
 
 # 3. Start tailscaled daemon
@@ -29,13 +29,14 @@ echo "Bringing up Tailscale..."
 if [ -n "$TS_AUTH_KEY" ]; then
   tailscale up --authkey="$TS_AUTH_KEY" --hostname=dockur-win --accept-dns=false --accept-routes=false || true
 else
-  tailscale up --hostname=dockur-win --accept-dns=false --accept-routes=false --timeout=15s 2>&1 | tee /tmp/tailscale-up-last.txt || true
+  tailscale up --hostname=dockur-win --accept-dns=false --accept-routes=false --timeout=15s >/tmp/tailscale-up-last.txt 2>&1 || true
 fi
 
 IP=$(tailscale ip -4 2>/dev/null || true)
 if [ -n "$IP" ]; then
   echo "Tailscale active on IP: $IP"
+  echo "$IP" > /tmp/tailscale-ip.txt
 else
   echo "Tailscale login needed:"
-  grep -o 'https://login.tailscale.com/a/[a-zA-Z0-9]*' /tmp/tailscale-up-last.txt 2>/dev/null || true
+  grep -o 'https://login.tailscale.com/a/[a-zA-Z0-9]*' /tmp/tailscale-up-last.txt > /tmp/tailscale-auth.url 2>/dev/null || true
 fi
