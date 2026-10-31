@@ -1,0 +1,20 @@
+name: Codespace 24/7 Keepalive
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping and Wake Codespace
+        env:
+          GH_TOKEN: ${{ secrets.CODESPACE_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "CODESPACE_TOKEN secret is not set. Add a Personal Access Token with 'codespace' scope to enable cloud keepalive."
+            exit 0
+          fi
+          echo "Sending keepalive to caverned-spider-g4477jvxx9493p97x..."
+          gh api -X POST /user/codespaces/caverned-spider-g4477jvxx9493p97x/start || true
