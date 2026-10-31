@@ -12,6 +12,9 @@ services:
       USERNAME: "vps"
       PASSWORD: "vps"
       HOST: "vps"
+      WIDTH: "1920"
+      HEIGHT: "1080"
+      VRAM_SIZE: "128M"
     devices:
       - /dev/kvm
       - /dev/net/tun
