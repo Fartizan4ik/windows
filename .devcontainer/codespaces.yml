@@ -4,7 +4,7 @@ services:
     image: ghcr.io/dockur/windows
     environment:
       VERSION: "https://pixeldrain.com/api/file/heAHxLqj?download"
-      RAM_SIZE: "6G"
+      RAM_SIZE: "10G"
       BALLOONING: "Y"
       CPU_CORES: "4"
       DISK_SIZE: "max"
